@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.wordpress.deployment.name }}
+spec:
+  replicas: {{ .Values.wordpress.deployment.replicas }}
+  selector:
+    matchLabels:
+      {{ .Values.wordpress.labels | toYaml | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{ .Values.wordpress.labels | toYaml | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ .Values.wordpress.deployment.name }}
+        image: {{ .Values.wordpress.deployment.image.repository }}:{{ .Values.wordpress.deployment.image.tag | default .Chart.AppVersion }}
+        imagePullPolicy: {{ .Values.wordpress.deployment.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.wordpress.deployment.image.ports.containerPort }}
+        env:
+          {{- toYaml .Values.wordpress.extraEnvs | nindent 12 }}

@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.wordpress.ingress.name }}
+  annotations:
+    {{- range .Values.wordpress.ingress.annotations }}
+    {{ .name }}: {{ .value | quote }}
+    {{- end }}
+spec:
+  ingressClassName: {{ .Values.wordpress.ingress.className | quote }}
+  rules:
+    {{- range .Values.wordpress.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path | quote }}
+            pathType: {{ .pathType }}
+            backend:
+              service:
+                name: wordpress
+                port:
+                  number: 80
+          {{- end }}
+    {{- end }}
