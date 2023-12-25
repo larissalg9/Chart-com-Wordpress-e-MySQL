@@ -27,6 +27,8 @@ Chart do Wordpress:<br> https://github.com/bitnami/charts/tree/main/bitnami/word
 
 ```bash
 $ kubectl create ns virtualizacao
+$ git clone https://github.com/larissalg9/Chart-com-Wordpress-e-MySQL.git
+$ cd Chart-com-Wordpress-e-MySQL
 $ cd wp-mysql-form1
 $ helm dependency update
 $ cd ..
@@ -41,6 +43,8 @@ Aguarde todos os pods estarem com o status "READY 1/1", em seguida acesse: http:
 
 ```bash
 $ kubectl create ns virtualizacao
+$ git clone https://github.com/larissalg9/Chart-com-Wordpress-e-MySQL.git
+$ cd Chart-com-Wordpress-e-MySQL
 $ helm upgrade wordpress-dev ./wp-mysql-form2 --install --namespace=virtualizacao
 $ kubectl port-forward svc/wordpress-service -n virtualizacao 8000:80
 
